@@ -5,6 +5,8 @@ class UI(Tk):
     def __init__(self):
         super().__init__()
 
+        self.FONT = ("Arial", 16)
+
         self.minsize(300, 200)
         self.config(padx=16, pady=16)
         self.title("Miles-to-Km Converter")
@@ -16,22 +18,18 @@ class UI(Tk):
         user_input.focus()
         return user_input
 
-    def draw_unit_1_label(self):
-        unit_1_label = Label(text="miles", font=("Arial", 16))
-        unit_1_label.grid(column=2, row=0)
+    def draw_unit_label(self, text, pos):
+        unit_label = Label(text=text, font=self.FONT)
+        unit_label.grid(column=pos[0], row=pos[1])
 
     def draw_equals_label(self):
-        equals_label = Label(text="is equal to", font=("Arial", 16))
+        equals_label = Label(text="is equal to", font=self.FONT)
         equals_label.grid(column=0, row=1)
 
     def draw_result_label(self):
-        result_label = Label(text="0", font=("Arial", 16))
+        result_label = Label(text="0", font=self.FONT)
         result_label.grid(column=1, row=1)
         return result_label
-
-    def draw_unit_2_label(self):
-        unit_2_label = Label(text="km", font=("Arial", 16))
-        unit_2_label.grid(column=2, row=1)
 
     def draw_calculate_button(self, clicked, user_input, result_label):
         calculate_button = Button(
