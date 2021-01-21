@@ -11,36 +11,49 @@ class UI(Tk):
         self.config(padx=16, pady=16)
         self.title("Miles-to-Km Converter")
 
-    # PUBLIC METHODS
-    def draw_user_input(self):
+        self.user_input = self._draw_user_input()
+        self.result_label = self._draw_result_label()
+
+    # PRIVATE METHODS
+    def _draw_user_input(self):
         user_input = Entry(width=6)
         user_input.grid(column=1, row=0)
         user_input.focus()
         return user_input
 
-    def draw_unit_label(self, text, pos):
-        unit_label = Label(text=text, font=self.FONT)
-        unit_label.grid(column=pos[0], row=pos[1])
-
-    def draw_equals_label(self):
-        equals_label = Label(text="is equal to", font=self.FONT)
-        equals_label.grid(column=0, row=1)
-
-    def draw_result_label(self):
+    def _draw_result_label(self):
         result_label = Label(text="0", font=self.FONT)
         result_label.grid(column=1, row=1)
         return result_label
 
-    def draw_calculate_button(self, clicked, user_input, result_label):
-        calculate_button = Button(
-            text="Calculate", command=lambda: clicked(
-                user_input,
-                result_label
-            )
-        )
+    def _draw_unit_label(self, text, pos):
+        unit_label = Label(text=text, font=self.FONT)
+        unit_label.grid(column=pos[0], row=pos[1])
+
+    def _draw_equals_label(self):
+        equals_label = Label(text="is equal to", font=self.FONT)
+        equals_label.grid(column=0, row=1)
+
+    def _draw_calculate_button(self, _calculate_button_clicked):
+        calculate_button = Button(text="Calculate", command=_calculate_button_clicked)
         calculate_button.grid(column=1, row=2)
 
-    def calculate_button_clicked(self, user_input, result_label):
-        unit_1 = float(user_input.get())
-        unit_2 = round(unit_1 * 1.609, 2)
-        result_label.config(text=f"{unit_2}")
+    def _update_result_label(self, new_value):
+        self.result_label.config(text=f"{new_value}")
+
+    # EVENTS
+    def _calculate_button_clicked(self):
+        self._update_result_label(self._convert_units())
+
+    # LOGIC
+    def _convert_units(self):
+        value = float(self.user_input.get())
+        value_rounded = round(value * 1.609, 2)
+        return value_rounded
+
+    # PUBLIC METHODS
+    def draw_screen(self):
+        self._draw_unit_label("miles", (2, 0))
+        self._draw_unit_label("km", (2, 1))
+        self._draw_equals_label()
+        self._draw_calculate_button(self._calculate_button_clicked)
