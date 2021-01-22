@@ -2,10 +2,12 @@ from tkinter import *
 
 
 class UI(Tk):
-    def __init__(self):
+    def __init__(self, converter):
         super().__init__()
 
         self.FONT = ("Arial", 16)
+
+        self.converter = converter
 
         self.minsize(300, 200)
         self.config(padx=16, pady=16)
@@ -43,13 +45,8 @@ class UI(Tk):
 
     # EVENTS
     def _calculate_button_clicked(self):
-        self._update_result_label(self._convert_units())
-
-    # LOGIC
-    def _convert_units(self):
-        value = float(self.user_input.get())
-        value_rounded = round(value * 1.609, 2)
-        return value_rounded
+        new_units = self.converter.convert_miles_to_km(self.user_input)
+        self._update_result_label(new_units)
 
     # PUBLIC METHODS
     def draw_screen(self):
