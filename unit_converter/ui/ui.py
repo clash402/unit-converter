@@ -16,7 +16,15 @@ class UI(Tk):
         self.user_input = self._draw_user_input()
         self.result_label = self._draw_result_label()
 
-    # PRIVATE METHODS
+        self._draw()
+
+    # DRAW METHODS
+    def _draw(self):
+        self._draw_unit_label("miles", (2, 0))
+        self._draw_unit_label("km", (2, 1))
+        self._draw_equals_label()
+        self._draw_calculate_button(self._calculate_button_clicked)
+
     def _draw_user_input(self):
         user_input = Entry(width=6)
         user_input.grid(column=1, row=0)
@@ -40,6 +48,7 @@ class UI(Tk):
         calculate_button = Button(text="Calculate", command=_calculate_button_clicked)
         calculate_button.grid(column=1, row=2)
 
+    # UPDATE METHODS
     def _update_result_label(self, new_value):
         self.result_label.config(text=f"{new_value}")
 
@@ -47,10 +56,3 @@ class UI(Tk):
     def _calculate_button_clicked(self):
         new_units = self.converter.convert_miles_to_km(self.user_input)
         self._update_result_label(new_units)
-
-    # PUBLIC METHODS
-    def draw_screen(self):
-        self._draw_unit_label("miles", (2, 0))
-        self._draw_unit_label("km", (2, 1))
-        self._draw_equals_label()
-        self._draw_calculate_button(self._calculate_button_clicked)
